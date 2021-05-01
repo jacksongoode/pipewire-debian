@@ -50,10 +50,12 @@
 |[libldacbt-enc2](https://packages.ubuntu.com/hirsute/libldacbt-enc2) | **Dependencies**
 
 
-# HURRAY [Launchpad PPA](https://launchpad.net/~pipewire-debian/+archive/ubuntu/pipewire-upstream) Added
+# HURRAY [Launchpad PPA](https://launchpad.net/~pipewire-debian/+archive/ubuntu/pipewire-upstream) Added  
 
-# Usage
-#### :bulb: RECOMMENDED & CONVIENT WAY, SEE NEXT [USAGE](#usage-from-this-repo) FOR NON \*UBUNTU DEBIAN BASED DISTRO
+:warning: **THAT MEAN THIS REPO IS NOT OBSELETE. I WILL SYNC THIS REPO WITH LAUNCHPAD PPA TO SUPPORT OTHER DEBIAN BASED DISTROS. THE [DEVLEOPMENT](https://github.com/pipewire-debian/pipewire-debian/tree/development) BRANCH IS IMPORTANT OF THIS REPO, I WILL BE USING THAT BRANCH TO PUSH NEW PATCH RELATED TO BUILDING PIPEWIRE AND ITS DEPENDENCIES.**
+
+## Add Launchpad PPA
+ :bulb: **RECOMMENDED & CONVIENT WAY, SEE NEXT [Section](#or-add-github-ppa) FOR OTHER DEBIAN BASED DISTRO**
 
 ```bash
 You can update your system with unsupported packages from this untrusted PPA by adding ppa:pipewire-debian/pipewire-upstream
@@ -69,17 +71,21 @@ deb http://ppa.launchpad.net/pipewire-debian/pipewire-upstream/ubuntu focal main
 deb-src http://ppa.launchpad.net/pipewire-debian/pipewire-upstream/ubuntu focal main 
 ```
 
-## :warning: THAT MEAN THIS REPO IS NOT OBSELETE. I WILL SYNC THIS REPO WITH LAUNCHPAD PPA TO SUPPORT OTHER DEBIAN BASED DISTROS. THE [DEVLEOPMENT](https://github.com/pipewire-debian/pipewire-debian/tree/development) BRANCH IS IMPORTANT OF THIS REPO, I WILL BE USING THAT BRANCH TO PUSH NEW PATCH RELATED TO BUILDING PIPEWIRE AND ITS DEPENDENCIES.
 
-
-# Usage (From This Repo) 
-#### :bulb: Use IFF you have any strong Reaseon - Mostly other than Ubuntu
+## OR Add Github PPA
+:bulb: **Use IFF you have any strong Reason - Mostly for other than Ubuntu (Kali,MX,parrot,mint,deepin,etc)**
 
 ```bash
 curl -SsL https://pipewire-debian.github.io/pipewire-debian/KEY.gpg | sudo apt-key add -
 sudo curl -SsL -o /etc/apt/sources.list.d/pipewire.list https://pipewire-debian.github.io/pipewire-debian/pipewire.list
 sudo apt update
 
+```
+
+## **LETS FOLLOW THE REST OF INSTALLATION INSTRUCTION AFTER ADDING ONE OF THE ABOVE TWO PPA**
+
+
+```bash
 # Install dependencies
 
 sudo apt install libfdk-aac2 libldacbt-{abr,enc}2 libopenaptx0
@@ -95,15 +101,20 @@ sudo apt install pipewire-doc
 
 # You don't need to uninstall PulseAudio to enable PipeWire, disable and mask PulseAudio related services and stop them
 
-systemctl --user stop pulseaudio
+systemctl --user --now disable  pulseaudio.{socket,service}
 systemctl --user mask pulseaudio
 
 # After Installation, Enable pipewire related services
 
 systemctl --user --now enable pipewire{,-pulse}{.socket,.service} pipewire-media-session.service
 
+# You can check which server is in use by, as your regular user, running:
+
+pactl info | grep '^Server Name'
+
 # Still if your system does't have any sound, please reboot
 ```
+
 # Wiki
 
 - [Gentoo-wiki](https://wiki.gentoo.org/wiki/PipeWire)
